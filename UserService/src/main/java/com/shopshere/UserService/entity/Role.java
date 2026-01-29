@@ -1,4 +1,4 @@
-package com.shopshere.UserService.entities;
+package com.shopshere.UserService.entity;
 
 import jakarta.persistence.*;
 import java.util.Set;
