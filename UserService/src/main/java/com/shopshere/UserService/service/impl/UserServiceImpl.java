@@ -69,4 +69,25 @@ public class UserServiceImpl implements UserService {
 
         return response;
     }
+
+    @Override
+    public UserResponseDTO findByEmail(String email) {
+
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("User not found. " + email));
+
+        UserResponseDTO response = new UserResponseDTO();
+        response.setId(user.getUserId());
+        response.setFirstName(user.getFirstName());
+        response.setLastName(user.getLastName());
+        response.setEmail(user.getEmail());
+        response.setCreatedAt(user.getCreatedAt());
+        response.setRoles(
+                user.getRoles()
+                        .stream()
+                        .map(Role::getName)
+                        .collect(Collectors.toSet())
+        );
+
+        return response;
+    }
 }

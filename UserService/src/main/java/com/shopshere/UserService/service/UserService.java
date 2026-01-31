@@ -6,4 +6,6 @@ import com.shopshere.UserService.dto.response.UserResponseDTO;
 public interface UserService {
 
     UserResponseDTO registerUser(UserRegistrationRequest userRegistrationRequest);
+
+    UserResponseDTO findByEmail(String email);
 }

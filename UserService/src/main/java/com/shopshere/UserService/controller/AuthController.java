@@ -2,6 +2,7 @@ package com.shopshere.UserService.controller;
 
 import com.shopshere.UserService.dto.request.LoginRequestDTO;
 import com.shopshere.UserService.dto.response.ApiResponse;
+import com.shopshere.UserService.dto.response.LoginResponseDTO;
 import com.shopshere.UserService.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -21,15 +22,15 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<Object>> login(
+    public ResponseEntity<ApiResponse<LoginResponseDTO>> login(
             @Valid @RequestBody LoginRequestDTO request) {
 
-        authService.login(request); // success if no exception
+        LoginResponseDTO loginResponseDTO = authService.login(request); // success if no exception
 
-        ApiResponse<Object> response = ApiResponse.builder()
+        ApiResponse<LoginResponseDTO> response = ApiResponse.<LoginResponseDTO>builder()
                 .status("SUCCESS")
                 .message("Login successful")
-                .data(null)
+                .data(loginResponseDTO)
                 .timestamp(LocalDateTime.now())
                 .build();
 

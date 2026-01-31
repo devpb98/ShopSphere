@@ -5,5 +5,5 @@ import com.shopshere.UserService.dto.response.LoginResponseDTO;
 
 public interface AuthService {
 
-    void login(LoginRequestDTO loginUser);
+    LoginResponseDTO login(LoginRequestDTO loginUser);
 }

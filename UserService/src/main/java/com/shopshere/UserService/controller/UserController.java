@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -30,6 +31,21 @@ public class UserController {
         return "OK";
     }
 
+    @GetMapping("/{email}")
+    public ResponseEntity<ApiResponse<UserResponseDTO>> getUser(@PathVariable String email) {
+        UserResponseDTO userResponse = userService.findByEmail(email);
+
+        ApiResponse<UserResponseDTO> response = ApiResponse.<UserResponseDTO>builder()
+                .status("SUCCESS")
+                .message("User Data fetched successfully")
+                .data(userResponse)
+                .timestamp(LocalDateTime.now())
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<UserResponseDTO>> registerUser(@Valid @RequestBody UserRegistrationRequest user) {
 
